@@ -7,7 +7,6 @@ import { UsersModule } from './users/users.module';
 import { PrismaService } from '../prisma/prisma.service';
 import { WebsocketGateway } from './websocket/websocket.gateway';
 import { WsJwtGuard } from './websocket/ws-jwt.guard';
-import { HealthModule } from './health/health.module';
 
 @Module({
   imports: [
@@ -23,7 +22,6 @@ import { HealthModule } from './health/health.module';
     AuthModule,
     TasksModule,
     UsersModule,
-    HealthModule,
   ],
   providers: [
     PrismaService,
