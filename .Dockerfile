@@ -17,6 +17,9 @@ COPY . .
 # Build the application
 RUN npm run build
 
+# Check if the build was successful and list the dist directory
+RUN ls -la /app/dist
+
 # Production stage
 FROM node:20-alpine
 
@@ -39,14 +42,8 @@ COPY --from=builder /app/dist ./dist
 # Copy Prisma client
 COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 
-# Ensure the node_modules/.prisma/client directory exists
-RUN mkdir -p /app/node_modules/.prisma/client && \
-    if [ -d "/app/node_modules/.prisma/client/query_engine-linux-musl" ]; then \
-        echo "Prisma client found"; \
-    else \
-        echo "Prisma client not found, generating..."; \
-        npx prisma generate; \
-    fi
+# List the contents of the dist directory to verify
+RUN ls -la /app/dist
 
 # Expose the port the app runs on
 EXPOSE 3000
