@@ -43,9 +43,5 @@ COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 # Expose the port the app runs on
 EXPOSE 3000
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD wget --no-verbose --tries=1 --spider http://localhost:3000/api/health || exit 1
-
 # Command to run the application
 CMD ["sh", "-c", "npx prisma migrate deploy && node dist/main"]
